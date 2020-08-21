@@ -139,9 +139,9 @@ class BinaryServer:
         self.logger.info('Listening on %s:%s', self.hostname, self.port)
 
     def _clear_cache(self):
-        logger.warning(f'protocol tasks being cleared, before:{len(self.protocol_tasks)}')
+        self.logger.warning(f'protocol tasks being cleared, before:{len(self.protocol_tasks)}')
         self.protocol_tasks = [task for task in self.protocol_tasks if (task.done() or task.cancelled())]
-        logger.warning(f'after {len(self.protocol_tasks)}')
+        self.logger.warning(f'after {len(self.protocol_tasks)}')
 
     async def stop(self):
         self.logger.info('Closing asyncio socket server')
