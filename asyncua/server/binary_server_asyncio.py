@@ -118,6 +118,7 @@ class BinaryServer:
 
     def _make_protocol(self):
         """Protocol Factory"""
+        self._clear_cache()
         return OPCUAProtocol(
             iserver=self.iserver,
             policies=self._policies,
@@ -136,6 +137,9 @@ class BinaryServer:
             self.hostname = sockname[0]
             self.port = sockname[1]
         self.logger.info('Listening on %s:%s', self.hostname, self.port)
+
+    def _clear_cache(self):
+        self.protocol_tasks = [task for task in self.protocol_tasks if (task.done() or task.cancelled())]
 
     async def stop(self):
         self.logger.info('Closing asyncio socket server')
