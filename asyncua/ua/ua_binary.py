@@ -119,8 +119,11 @@ class _Primitive1(object):
         self.format = st.format
 
     def pack(self, data):
-        logging.warning(f"{data}, {self.format}")
-        return struct.pack(self.format, data)
+        try:
+            return struct.pack(self.format, data)
+        except:
+            logging.warning(f"{data}, {self.format}")
+            raise Exception
 
     def unpack(self, data):
         return struct.unpack(self.format, data.read(self.size))[0]
