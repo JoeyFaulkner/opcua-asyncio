@@ -106,7 +106,7 @@ class InternalSubscription:
                 self._publish_cycles_count += 1
             result = self._pop_publish_result()
         if result is not None:
-            self.logger.warning(f"publish_result {result}")
+            # self.logger.warning(f"publish_result {result}")
             # self.logger.info('publish_results for %s', self.data.SubscriptionId)
             # The callback can be:
             #    Subscription.publish_callback -> server internal subscription
