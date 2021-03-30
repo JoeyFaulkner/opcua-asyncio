@@ -171,19 +171,22 @@ class Primitives(Primitives1):
 
 
 def pack_uatype(vtype, value):
-    if hasattr(Primitives, vtype.name):
-        return getattr(Primitives, vtype.name).pack(value)
-    elif vtype.value > 25:
-        return Primitives.Bytes.pack(value)
-    elif vtype == ua.VariantType.ExtensionObject:
-        return extensionobject_to_binary(value)
-    elif vtype in (ua.VariantType.NodeId, ua.VariantType.ExpandedNodeId):
-        return nodeid_to_binary(value)
-    elif vtype == ua.VariantType.Variant:
-        return variant_to_binary(value)
-    else:
-        return struct_to_binary(value)
-
+    try:
+        if hasattr(Primitives, vtype.name):
+            return getattr(Primitives, vtype.name).pack(value)
+        elif vtype.value > 25:
+            return Primitives.Bytes.pack(value)
+        elif vtype == ua.VariantType.ExtensionObject:
+            return extensionobject_to_binary(value)
+        elif vtype in (ua.VariantType.NodeId, ua.VariantType.ExpandedNodeId):
+            return nodeid_to_binary(value)
+        elif vtype == ua.VariantType.Variant:
+            return variant_to_binary(value)
+        else:
+            return struct_to_binary(value)
+    except:
+        logger.warning(f"{value}, {vtype}")
+        raise Exception
 
 def unpack_uatype(vtype, data):
     if hasattr(Primitives, vtype.name):
