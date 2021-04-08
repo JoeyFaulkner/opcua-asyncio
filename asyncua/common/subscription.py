@@ -92,7 +92,7 @@ class Subscription:
         """
         Handle `PublishResult` callback.
         """
-        self.logger.info("Publish callback called with result: %s", publish_result)
+        self.logger.debug("Publish callback called with result: %s", publish_result)
         if publish_result.NotificationMessage.NotificationData is not None:
             for notif in publish_result.NotificationMessage.NotificationData:
                 if isinstance(notif, ua.DataChangeNotification):
